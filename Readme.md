@@ -4,5 +4,5 @@
 
 编写语言：Python + Bash
 
-使用方法：由于使用了大量的绝对路径文件，所以请把这些压缩包都解压到E:\Projects\CQApkTools路径下，然后进入Project中进行二次编辑和定制
+使用方法：由于使用了大量的绝对路径文件，所以请把所有压缩包都解压到E:\Projects\CQApkTools路径下，然后进入Project中进行二次编辑和定制。CQApkTools.iss使用Inno可以进行软件打包
 
