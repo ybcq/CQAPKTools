@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "CQApkTools"
-#define MyAppVersion "2.0"
+#define MyAppVersion "3.0.0.2024"
 #define MyAppPublisher "”˘€‡≥ı«Ÿ»Ìº˛Œ›"
 #define MyAppURL "https://ybcq.github.io/"
 #define MyAppExeName "CQAPKTools.exe"
@@ -29,16 +29,16 @@ Compression=lzma
 SolidCompression=yes
 
 ;◊Û±ﬂÕº∆¨
-WizardImageFile=E:\Projects\#≈‰Õº\∞≤◊∞≈‰Õº.bmp
+WizardImageFile=E:\Projects\#≈‰Õº\∞≤◊∞∞¸≈‰Õº\∞≤◊∞≈‰Õº.bmp
 ;”“…œΩ«Õº∆¨
-WizardSmallImageFile=E:\Projects\#≈‰Õº\WizModernSmallImage.bmp
+WizardSmallImageFile=E:\Projects\#≈‰Õº\∞≤◊∞∞¸≈‰Õº\WizModernSmallImage.bmp
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "E:\Projects\CQApkTools\CQApkTools\*.*"; DestDir: "{app}"; Flags: igNoreversion recursesubdirs createallsubdirs
+Source: "E:\Projects\CQApkTools\Project\dist\CQAPKTools\*.*"; DestDir: "{app}"; Flags: igNoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
