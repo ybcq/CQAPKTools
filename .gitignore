@@ -1,3 +1,4 @@
-Versions/*.exe
-Codes.bak\
-Apkinstaller\
+.vscode
+__pycache__
+dist
+build

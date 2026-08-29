@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['CQAPKTools.py'],
+    ['main.py'],
     pathex=[],
     binaries=[],
     datas=[],

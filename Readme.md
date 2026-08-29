@@ -67,13 +67,18 @@
    # 例如：E:\Projects\CQApkTools
    ```
 
-2. **准备依赖工具**
+2. **安装Python依赖**
+   ```bash
+   pip install -r Project/requirements.txt
+   ```
+
+3. **准备依赖工具**
    - 确保ADB工具在系统PATH中
    - 将aapt.exe放置在Project目录下
    - 将keytool.exe放置在Project/bin目录下
 
-3. **配置文件**
-   - 编辑 `Project/CQApkRename.ini` 文件
+4. **配置文件**
+   - 编辑 `Project/Setup.ini` 文件
    - 确保路径配置正确
 
 ## 🚀 使用方法
@@ -84,7 +89,7 @@
 cd E:\Projects\CQApkTools\Project
 
 # 运行主程序
-python CQAPKTools.py
+python main.py
 ```
 
 ### 连接设备
@@ -176,7 +181,7 @@ python CQAPKTools.py
 
 ### 配置文件位置
 ```
-Project/CQApkRename.ini
+Project/Setup.ini
 ```
 
 ### 配置项说明

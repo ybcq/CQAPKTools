@@ -1,0 +1,2 @@
+PySimpleGUI-4-Foss
+PyInstaller
