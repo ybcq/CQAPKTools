@@ -2,10 +2,16 @@
 
 
 a = Analysis(
-    ['main.py'],
+    ['app.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[
+        ('templates', 'templates'),
+        ('static', 'static'),
+        ('Setup.ini', '.'),
+        ('CQAPKTools.ico', '.'),
+        ('Tools', 'Tools'),
+    ],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

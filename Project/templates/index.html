@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ app_name }} {{ app_version }}</title>
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/bootstrap-icons/font/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-wrapper">
+        <!-- 左侧侧边栏 -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h5 class="mb-0">{{ app_name }}</h5>
+                <small class="text-muted">V{{ app_version }}</small>
+            </div>
+
+            <div class="nav flex-column nav-pills flex-fill" id="v-pills-tab" role="tablist"
+                aria-orientation="vertical">
+                <button class="nav-link active" id="tab-general-optimize" data-bs-toggle="pill"
+                    data-bs-target="#pane-general-optimize" type="button" role="tab">
+                    <i class="bi bi-speedometer2"></i> 通用优化
+                </button>
+                <button class="nav-link" id="tab-surge-freeze" data-bs-toggle="pill" data-bs-target="#pane-surge-freeze"
+                    type="button" role="tab">
+                    <i class="bi bi-snow"></i> 澎湃冻结
+                </button>
+                <button class="nav-link" id="tab-huawei-engine" data-bs-toggle="pill"
+                    data-bs-target="#pane-huawei-engine" type="button" role="tab">
+                    <i class="bi bi-hdd-network"></i> 华为引擎
+                </button>
+                <button class="nav-link" id="tab-batch-rename" data-bs-toggle="pill" data-bs-target="#pane-batch-rename"
+                    type="button" role="tab">
+                    <i class="bi bi-file-earmark-text"></i> 批量命名
+                </button>
+                <button class="nav-link" id="tab-batch-extract-install" data-bs-toggle="pill"
+                    data-bs-target="#pane-batch-extract-install" type="button" role="tab">
+                    <i class="bi bi-phone"></i> 批量提取安装
+                </button>
+
+                <button class="nav-link mt-auto" id="tab-about" data-bs-toggle="pill" data-bs-target="#pane-about"
+                    type="button" role="tab">
+                    <i class="bi bi-info-circle"></i> 关于
+                </button>
+            </div>
+        </nav>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 设备状态栏 -->
+            <div class="device-bar">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="device-status disconnected" id="device-status-bar">
+                        <span class="device-status-dot"></span>
+                        <span id="device-status-text">未连接</span>
+                    </div>
+                    <input type="text" class="form-control form-control-sm" id="device-id" placeholder="设备ID" readonly
+                        style="max-width: 200px;">
+                    <button class="btn btn-outline-primary btn-sm" id="btn-connect-device">
+                        <i class="bi bi-usb"></i> 连接设备
+                    </button>
+                </div>
+            </div>
+
+            <div class="tab-content h-100" id="v-pills-tabContent">
+                <!-- 澎湃冻结 -->
+                <div class="tab-pane fade" id="pane-surge-freeze" role="tabpanel">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header"><i class="bi bi-list-check"></i> 常用冻结</div>
+                                <div class="card-body">
+                                    <div class="d-flex flex-wrap gap-2 mb-2 align-items-center justify-content-between"
+                                        data-group="freeze-preset">
+                                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                                            <span class="text-nowrap me-2">Analytics</span>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-primary" data-action="freeze_app"
+                                                    data-package="com.miui.analytics">冻结</button>
+                                                <button class="btn btn-outline-primary" data-action="unfreeze_app"
+                                                    data-package="com.miui.analytics">解冻</button>
+                                            </div>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-danger" data-action="uninstall_app"
+                                                    data-package="com.miui.analytics">卸载</button>
+                                                <button class="btn btn-outline-warning" data-action="uninstall_app"
+                                                    data-package="com.miui.analytics" data-keep="1">重装</button>
+                                            </div>
+                                        </div>
+                                        <span class="text-muted small ms-auto ps-2">com.miui.analytics</span>
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2 mb-2 align-items-center justify-content-between"
+                                        data-group="freeze-preset">
+                                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                                            <span class="text-nowrap me-2">Adsolution</span>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-primary" data-action="freeze_app"
+                                                    data-package="com.miui.systemAdSolution">冻结</button>
+                                                <button class="btn btn-outline-primary" data-action="unfreeze_app"
+                                                    data-package="com.miui.systemAdSolution">解冻</button>
+                                            </div>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-danger" data-action="uninstall_app"
+                                                    data-package="com.miui.systemAdSolution">卸载</button>
+                                                <button class="btn btn-outline-warning" data-action="uninstall_app"
+                                                    data-package="com.miui.systemAdSolution" data-keep="1">重装</button>
+                                            </div>
+                                        </div>
+                                        <span class="text-muted small ms-auto ps-2">com.miui.systemAdSolution</span>
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2 mb-2 align-items-center justify-content-between"
+                                        data-group="freeze-preset">
+                                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                                            <span class="text-nowrap me-2">Joyose</span>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-primary" data-action="freeze_app"
+                                                    data-package="com.xiaomi.joyose">冻结</button>
+                                                <button class="btn btn-outline-primary" data-action="unfreeze_app"
+                                                    data-package="com.xiaomi.joyose">解冻</button>
+                                            </div>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-danger" data-action="uninstall_app"
+                                                    data-package="com.xiaomi.joyose">卸载</button>
+                                                <button class="btn btn-outline-warning" data-action="uninstall_app"
+                                                    data-package="com.xiaomi.joyose" data-keep="1">重装</button>
+                                            </div>
+                                        </div>
+                                        <span class="text-muted small ms-auto ps-2">com.xiaomi.joyose</span>
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2 mb-2 align-items-center justify-content-between"
+                                        data-group="freeze-preset">
+                                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                                            <span class="text-nowrap me-2">SIM STK</span>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-primary" data-action="freeze_app"
+                                                    data-package="com.android.stk">冻结</button>
+                                                <button class="btn btn-outline-primary" data-action="unfreeze_app"
+                                                    data-package="com.android.stk">解冻</button>
+                                            </div>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-danger" data-action="uninstall_app"
+                                                    data-package="com.android.stk">卸载</button>
+                                                <button class="btn btn-outline-warning" data-action="uninstall_app"
+                                                    data-package="com.android.stk" data-keep="1">重装</button>
+                                            </div>
+                                        </div>
+                                        <span class="text-muted small ms-auto ps-2">com.android.stk</span>
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2 mb-2 align-items-center justify-content-between"
+                                        data-group="freeze-preset">
+                                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                                            <span class="text-nowrap me-2">内容中心</span>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-primary" data-action="freeze_app"
+                                                    data-package="com.miui.newhome">冻结</button>
+                                                <button class="btn btn-outline-primary" data-action="unfreeze_app"
+                                                    data-package="com.miui.newhome">解冻</button>
+                                            </div>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-danger" data-action="uninstall_app"
+                                                    data-package="com.miui.newhome">卸载</button>
+                                                <button class="btn btn-outline-warning" data-action="uninstall_app"
+                                                    data-package="com.miui.newhome" data-keep="1">重装</button>
+                                            </div>
+                                        </div>
+                                        <span class="text-muted small ms-auto ps-2">com.miui.newhome</span>
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2 mb-2 align-items-center justify-content-between"
+                                        data-group="freeze-preset">
+                                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                                            <span class="text-nowrap me-2">快应用</span>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-primary" data-action="freeze_app"
+                                                    data-package="com.miui.hybrid">冻结</button>
+                                                <button class="btn btn-outline-primary" data-action="unfreeze_app"
+                                                    data-package="com.miui.hybrid">解冻</button>
+                                            </div>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-danger" data-action="uninstall_app"
+                                                    data-package="com.miui.hybrid">卸载</button>
+                                                <button class="btn btn-outline-warning" data-action="uninstall_app"
+                                                    data-package="com.miui.hybrid" data-keep="1">重装</button>
+                                            </div>
+                                        </div>
+                                        <span class="text-muted small ms-auto ps-2">com.miui.hybrid</span>
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2 mb-2 align-items-center justify-content-between"
+                                        data-group="freeze-preset">
+                                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                                            <span class="text-nowrap me-2">电量与性能</span>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-primary" data-action="freeze_app"
+                                                    data-package="com.miui.powerkeeper">冻结</button>
+                                                <button class="btn btn-outline-primary" data-action="unfreeze_app"
+                                                    data-package="com.miui.powerkeeper">解冻</button>
+                                            </div>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-danger" data-action="uninstall_app"
+                                                    data-package="com.miui.powerkeeper">卸载</button>
+                                                <button class="btn btn-outline-warning" data-action="uninstall_app"
+                                                    data-package="com.miui.powerkeeper" data-keep="1">重装</button>
+                                            </div>
+                                        </div>
+                                        <span class="text-muted small ms-auto ps-2">com.miui.powerkeeper</span>
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2 mb-2 align-items-center justify-content-between"
+                                        data-group="freeze-preset">
+                                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                                            <span class="text-nowrap me-2">系统更新</span>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-primary" data-action="freeze_app"
+                                                    data-package="com.android.updater">冻结</button>
+                                                <button class="btn btn-outline-primary" data-action="unfreeze_app"
+                                                    data-package="com.android.updater">解冻</button>
+                                            </div>
+                                            <div class="btn-group">
+                                                <button class="btn btn-outline-danger" data-action="uninstall_app"
+                                                    data-package="com.android.updater">卸载</button>
+                                                <button class="btn btn-outline-warning" data-action="uninstall_app"
+                                                    data-package="com.android.updater" data-keep="1">还原</button>
+                                            </div>
+                                        </div>
+                                        <span class="text-muted small ms-auto ps-2">com.android.updater</span>
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="btn-group me-2">
+                                            <button class="btn btn-success" data-action="one_key_batch"
+                                                data-type="冻结">一键冻结</button>
+                                            <button class="btn btn-success" data-action="one_key_batch"
+                                                data-type="解冻">一键解冻</button>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button class="btn btn-danger" data-action="one_key_batch"
+                                                data-type="卸载">一键卸载</button>
+                                            <button class="btn btn-warning" data-action="one_key_batch"
+                                                data-type="重装">一键重装</button>
+                                        </div>
+                                        <small class="text-muted ms-2">除电量与性能</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header"><i class="bi bi-person-gear"></i> 自定义包名操作</div>
+                                <div class="card-body">
+                                    <div class="input-group mb-2">
+                                        <input type="text" class="form-control" id="freeze-package-input"
+                                            placeholder="输入包名，如 com.android.phone">
+                                        <button class="btn btn-outline-secondary" data-action="get_top_package"
+                                            title="获取前台应用包名"><i class="bi bi-arrow-down-short"></i></button>
+                                    </div>
+                                    <div class="btn-group me-2">
+                                        <button class="btn btn-outline-primary" data-action="freeze_app"
+                                            data-use-input="1">冻结该包</button>
+                                        <button class="btn btn-outline-primary" data-action="unfreeze_app"
+                                            data-use-input="1">解冻该包</button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button class="btn btn-outline-danger" data-action="uninstall_app"
+                                            data-use-input="1">卸载该包</button>
+                                        <button class="btn btn-outline-warning" data-action="uninstall_app"
+                                            data-use-input="1" data-keep="1">重装该包</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3">
+                                <div class="card-header"><i class="bi bi-file-earmark-spreadsheet"></i> 列表冻结</div>
+                                <div class="card-body">
+                                    <div class="input-group mb-2">
+                                        <input type="text" class="form-control" id="freeze-filelist"
+                                            placeholder="选择CSV文件（每行一个包名）">
+                                        <button class="btn btn-outline-secondary" data-action="browse_file"
+                                            data-target="freeze-filelist">...</button>
+                                    </div>
+                                    <div class="btn-group me-2">
+                                        <button class="btn btn-outline-primary" data-action="one_key_list"
+                                            data-type="冻结">一键冻结列表</button>
+                                        <button class="btn btn-outline-primary" data-action="one_key_list"
+                                            data-type="解冻">一键解冻列表</button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button class="btn btn-outline-danger" data-action="one_key_list"
+                                            data-type="卸载">一键卸载列表</button>
+                                        <button class="btn btn-outline-warning" data-action="one_key_list"
+                                            data-type="重装">一键重装列表</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header"><i class="bi bi-phone"></i> 系统应用更新</div>
+                                <div class="card-body">
+                                    <div class="btn-group me-2">
+                                        <button class="btn btn-outline-primary"
+                                            data-action="scan_system_updates">检测系统应用更新</button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button class="btn btn-outline-warning"
+                                            data-action="reinstall_system_updates">一键置顶并卸载更新</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 通用优化 -->
+                <div class="tab-pane fade show active" id="pane-general-optimize" role="tabpanel">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header"><i class="bi bi-magic"></i> 动画设置</div>
+                                <div class="card-body">
+                                    <div class="btn-group mb-3 flex-wrap">
+                                        <button class="btn btn-outline-primary" data-action="set_animation" data-s1="0"
+                                            data-s2="0" data-s3="0">无动画</button>
+                                        <button class="btn btn-outline-primary" data-action="set_animation"
+                                            data-s1="0.5" data-s2="0.5" data-s3="0.5">快速</button>
+                                        <button class="btn btn-outline-primary" data-action="set_animation" data-s1="1"
+                                            data-s2="1" data-s3="1">默认设置</button>
+                                        <button class="btn btn-outline-primary" data-action="set_animation"
+                                            data-s1="1.5" data-s2="1.34" data-s3="1.17">优雅</button>
+                                    </div>
+                                    <div class="input-group input-group-sm mb-2">
+                                        <span class="input-group-text">窗口</span>
+                                        <input type="number" class="form-control" id="anim-speed1" value="1.5"
+                                            step="0.1">
+                                        <span class="input-group-text">过渡</span>
+                                        <input type="number" class="form-control" id="anim-speed2" value="1.5"
+                                            step="0.1">
+                                        <span class="input-group-text">动画</span>
+                                        <input type="number" class="form-control" id="anim-speed3" value="1.5"
+                                            step="0.1">
+                                    </div>
+                                    <button class="btn btn-outline-secondary" data-action="set_animation"
+                                        data-use-inputs="1">自定义速度</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header"><i class="bi bi-cpu"></i> 后台策略</div>
+                                <div class="card-body">
+                                    <div class="btn-group mb-3 flex-wrap">
+                                        <button class="btn btn-outline-primary" data-action="set_background"
+                                            data-level="0">无后台</button>
+                                        <button class="btn btn-outline-primary" data-action="set_background"
+                                            data-level="1">激进</button>
+                                        <button class="btn btn-outline-primary" data-action="set_background"
+                                            data-level="4">轻快</button>
+                                        <button class="btn btn-outline-primary" data-action="set_background"
+                                            data-level="16">默认限制</button>
+                                    </div>
+                                    <div class="input-group input-group-sm mb-2">
+                                        <span class="input-group-text">max_cached_processes</span>
+                                        <input type="number" class="form-control" id="bg-level" value="16">
+                                    </div>
+                                    <button class="btn btn-outline-secondary" data-action="set_background" style="margin-right:8px"
+                                        data-use-input="1">调整后台参数</button>
+                                    <div class="btn-group">
+                                        <button class="btn btn-outline-success" data-action="set_freezer"
+                                            data-enable="1">开启墓碑进程</button>
+                                        <button class="btn btn-outline-danger" data-action="set_freezer"
+                                            data-enable="0">关闭墓碑进程</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header"><i class="bi bi-download"></i> 一键降级</div>
+                                <div class="card-body">
+                                    <div class="input-group mb-2">
+                                        <input type="text" class="form-control" id="downgrade-folder"
+                                            placeholder="选择APK文件夹">
+                                        <button class="btn btn-outline-secondary" data-action="browse_folder"
+                                            data-target="downgrade-folder">...</button>
+                                    </div>
+                                    <div class="btn-group me-2">
+                                        <button class="btn btn-outline-primary" data-action="organize_folder"
+                                            data-use-target="downgrade-folder">整理文件名</button>
+                                    </div>
+                                    <div class="btn-group flex-wrap">
+                                        <button class="btn btn-outline-primary" data-action="process_apk_folder"
+                                            data-mode="uninstall_install"
+                                            data-use-target="downgrade-folder">卸载并安装</button>
+                                        <button class="btn btn-outline-primary" data-action="process_apk_folder"
+                                            data-mode="install_only" data-use-target="downgrade-folder">仅安装</button>
+                                        <button class="btn btn-outline-primary" data-action="process_apk_folder"
+                                            data-mode="replace" data-use-target="downgrade-folder">仅替换已安装</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header"><i class="bi bi-lightning-charge"></i> 应用激活</div>
+                                <div class="card-body">
+                                    <div class="btn-group flex-wrap">
+                                        <button class="btn btn-outline-primary" data-action="activate_app"
+                                            data-app="女娲石">激活女娲石</button>
+                                        <button class="btn btn-outline-primary" data-action="activate_app"
+                                            data-app="小黑屋">激活小黑屋</button>
+                                        <button class="btn btn-outline-primary" data-action="activate_app"
+                                            data-app="Shizuku">激活Shizuku</button>
+                                        <button class="btn btn-outline-primary" data-action="activate_app"
+                                            data-app="Scene">激活Scene</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 华为引擎 -->
+                <div class="tab-pane fade" id="pane-huawei-engine" role="tabpanel">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header"><i class="bi bi-folder2-open"></i> 共享磁盘</div>
+                                <div class="card-body">
+                                    <h6 class="text-muted">方法1</h6>
+                                    <div class="btn-group me-2">
+                                        <button class="btn btn-outline-primary"
+                                            data-action="map_shared_disk">映射共享目录为W盘</button>
+                                        <button class="btn btn-outline-primary"
+                                            data-action="unmap_shared_disk">取消映射共享磁盘</button>
+                                    </div>
+                                    <button class="btn btn-outline-secondary"
+                                        data-action="set_autorun_registry">设置开机自动映射</button>
+                                    <hr>
+                                    <h6 class="text-muted">方法2</h6>
+                                    <button class="btn btn-outline-primary"
+                                        data-action="create_network_icon">使用网络路径方式创建共享目录图标</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header"><i class="bi bi-tools"></i> 其他功能</div>
+                                <div class="card-body">
+                                    <div class="btn-group me-2">
+                                        <button class="btn btn-outline-primary" data-action="open_url"
+                                            data-url="https://space.bilibili.com/28516198">安装华为移动引擎</button>
+                                        <button class="btn btn-outline-danger"
+                                            data-action="kill_engine">杀死华为移动引擎</button>
+                                    </div>
+                                    <button class="btn btn-outline-primary"
+                                        data-action="launch_apkinstaller">为华为移动引擎安装软件</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 批量命名 -->
+                <div class="tab-pane fade" id="pane-batch-rename" role="tabpanel">
+                    <div class="card mb-3">
+                        <div class="card-header"><i class="bi bi-pencil"></i> 重命名操作</div>
+                        <div class="card-body">
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">选择单文件</span>
+                                <input type="text" class="form-control" id="rename-file" placeholder="选择一个APK文件">
+                                <button class="btn btn-outline-secondary" data-action="browse_file"
+                                    data-target="rename-file">...</button>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">选择文件夹</span>
+                                <input type="text" class="form-control" id="rename-folder" placeholder="选择包含APK的文件夹">
+                                <button class="btn btn-outline-secondary" data-action="browse_folder"
+                                    data-target="rename-folder">...</button>
+                            </div>
+                            <button class="btn btn-primary" data-action="start_rename">开始重命名</button>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-header"><i class="bi bi-gear"></i> 重命名设置</div>
+                        <div class="card-body">
+                            <div class="form-stack">
+                                <div>
+                                    <label class="form-label">表达式</label>
+                                    <input type="text" class="form-control" id="rename-pattern" value="{{ pattern }}"
+                                        placeholder="例如：{应用名字}_{应用包名}">
+                                    <div class="form-text">可用占位符：{应用包名} {应用名字} {版本名字} {APP证书用户} {APP证书序列号}</div>
+                                </div>
+                                <button class="btn btn-outline-secondary" data-action="save_pattern"
+                                    data-use-input="rename-pattern">应用设置</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><i class="bi bi-journal-text"></i> 重命名结果</div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>重命名前</th>
+                                            <th>重命名后</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="rename-result-body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 批量提取安装 -->
+                <div class="tab-pane fade" id="pane-batch-extract-install" role="tabpanel">
+                    <div class="card mb-3">
+                        <div class="card-header"><i class="bi bi-folder2-open"></i> 批量提取</div>
+                        <div class="card-body">
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">提取目录</span>
+                                <input type="text" class="form-control" id="extract-path" placeholder="选择提取目录">
+                                <button class="btn btn-outline-secondary" data-action="browse_folder"
+                                    data-target="extract-path">...</button>
+                            </div>
+                            <button class="btn btn-primary" data-action="start_extract">开始提取</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><i class="bi bi-box"></i> 批量安装</div>
+                        <div class="card-body">
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">安装目录</span>
+                                <input type="text" class="form-control" id="install-path" placeholder="选择安装目录">
+                                <button class="btn btn-outline-secondary" data-action="browse_folder"
+                                    data-target="install-path">...</button>
+                            </div>
+                            <div class="table-responsive mb-3">
+                                <table class="table table-bordered">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>应用名</th>
+                                            <th>是否已替换</th>
+                                            <th>是否新安装</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="extracted-list-body"></tbody>
+                                </table>
+                            </div>
+                            <div class="btn-group flex-wrap mb-3">
+                                <button class="btn btn-outline-primary" data-action="batch_install"
+                                    data-mode="install_all" data-use-target="install-path">批量安装</button>
+                                <button class="btn btn-outline-primary" data-action="batch_install"
+                                    data-mode="install_not_installed" data-use-target="install-path">仅安装尚未安装的应用</button>
+                                <button class="btn btn-outline-primary" data-action="batch_install" data-mode="replace"
+                                    data-use-target="install-path">用文件夹中的应用替换原应用</button>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="batch-keep-data" checked>
+                                <label class="form-check-label" for="batch-keep-data">卸载时保留数据</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 关于 -->
+                <div class="tab-pane fade h-100" id="pane-about" role="tabpanel">
+                    <div class="row g-3 h-100">
+                        <div class="col-md-4 h-100">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <div class="display-1 text-primary mb-3">
+                                        <i class="bi bi-wrench"></i>
+                                    </div>
+                                    <h4>{{ app_name }}</h4>
+                                    <p class="text-muted">版本 {{ app_version }}</p>
+                                    <hr>
+                                    <p class="mb-0"><strong>功能:</strong> MIUI 设备管理 + APK 处理</p>
+                                    <p class="mb-0"><strong>环境:</strong> 仅 Windows</p>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 h-100">
+                            <div class="card h-100">
+                                <div class="card-header"><i class="bi bi-journal-text"></i> 更新日志</div>
+                                <div class="card-body h-100">
+                                    <pre class="bg-light p-3 rounded small h-100"
+                                        style="overflow-y: auto; white-space: pre-wrap;">5.0.0
+- 重构为 Flask Web 应用，浏览器访问本地服务
+- 左侧标签栏 + 右侧内容页布局
+- 右侧实时日志流
+- 全功能迁移：澎湃冻结、通用优化、华为引擎、批量命名、批量提取安装</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧日志面板 -->
+        <aside class="log-panel" id="logPanel">
+            <div class="log-header" onclick="toggleLogPanel()">
+                <span class="log-title"><i class="bi bi-terminal"></i> 运行日志</span>
+                <span class="d-flex gap-1">
+                    <button class="btn btn-sm btn-outline-secondary" id="logToggleBtn"
+                        onclick="event.stopPropagation(); toggleLogPanel()">
+                        <i class="bi bi-chevron-double-right"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation(); clearLogs()">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </span>
+            </div>
+            <div class="log-content" id="logContent">
+                <div class="log-line">系统准备就绪...</div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- 错误提示模态窗 -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="errorModalTitle"><i class="bi bi-exclamation-triangle"></i> 提示</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="errorModalBody" class="mb-0"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 成功提示模态窗 -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title"><i class="bi bi-check-circle"></i> 执行成功</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="successModalMessage" class="mb-0"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+
+</html>

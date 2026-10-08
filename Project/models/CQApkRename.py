@@ -14,6 +14,8 @@ import os
 import re
 import subprocess
 
+from models.CQAPKTools import _print
+
 
 def _run_aapt(aapt_path, apk_path):
     """运行 aapt dump badging 并返回输出文本"""
@@ -35,7 +37,7 @@ def _run_keytool(keytool_path, apk_path):
     return result.stdout
 
 
-def extract_apk_info(apk_path, aapt_path='aapt.exe', keytool_path='bin\\keytool.exe'):
+def extract_apk_info(apk_path, aapt_path='Tools\\aapt.exe', keytool_path='Tools\\bin\\keytool.exe'):
     """
     从 APK 文件中提取元数据。
 
@@ -117,7 +119,7 @@ def build_filename(info, pattern):
     return filename.strip()
 
 
-def rename_apk(apk_path, pattern, aapt_path='aapt.exe', keytool_path='bin\\keytool.exe'):
+def rename_apk(apk_path, pattern, aapt_path='Tools\\aapt.exe', keytool_path='Tools\\bin\\keytool.exe'):
     """
     重命名单个 APK 文件。
 
@@ -158,7 +160,7 @@ def rename_apk(apk_path, pattern, aapt_path='aapt.exe', keytool_path='bin\\keyto
         return (apk_path, None, f'重命名失败: {e}')
 
 
-def batch_rename(apk_paths, pattern, aapt_path='aapt.exe', keytool_path='bin\\keytool.exe',
+def batch_rename(apk_paths, pattern, aapt_path='Tools\\aapt.exe', keytool_path='Tools\\bin\\keytool.exe',
                  log_callback=None):
     """
     批量重命名 APK 文件。
@@ -173,8 +175,10 @@ def batch_rename(apk_paths, pattern, aapt_path='aapt.exe', keytool_path='bin\\ke
     fail_count = 0
 
     for apk_path in apk_paths:
+        msg = f'正在处理: {os.path.basename(apk_path)}'
+        _print(msg)
         if log_callback:
-            log_callback(f'正在处理: {os.path.basename(apk_path)}')
+            log_callback(msg)
 
         old_path, new_path, error = rename_apk(
             apk_path, pattern, aapt_path, keytool_path
@@ -182,12 +186,14 @@ def batch_rename(apk_paths, pattern, aapt_path='aapt.exe', keytool_path='bin\\ke
 
         if error:
             fail_count += 1
-            if log_callback:
-                log_callback(f'  失败: {error}')
+            msg = f'  失败: {error}'
         else:
             success_count += 1
-            if log_callback:
-                log_callback(f'  成功: {os.path.basename(new_path)}')
+            msg = f'  成功: {os.path.basename(new_path)}'
+
+        _print(msg)
+        if log_callback:
+            log_callback(msg)
 
         results.append((old_path, new_path, error))
 

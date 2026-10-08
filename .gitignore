@@ -1,4 +1,29 @@
-.vscode
-__pycache__
-dist
-build
+# ========== Python ==========
+__pycache__/
+*.pyc
+.venv/
+
+# ========== 构建产物 ==========
+Project/dist/
+Project/build/
+Project/Tools/ApkInstaller/
+Output/
+
+# ========== 系统生成文件 ==========
+desktop.ini
+Thumbs.db
+
+# ========== 日志文件 ==========
+*.log
+
+# ========== 备份文件 ==========
+*.bak
+
+# ========== 编辑器 / IDE ==========
+.vscode/
+.kilo/
+
+# ========== 临时文件 ==========
+.tempfile/
+
+

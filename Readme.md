@@ -1,107 +1,135 @@
 # CQAPKTools - MIUI工具箱
 
+![Version](https://img.shields.io/badge/version-5.0.0-blue.svg)
+![Python](https://img.shields.io/badge/python-3.12-green.svg)
+![License](https://img.shields.io/badge/license-MIT-orange.svg)
+![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11-red.svg)
+
 <div align="center">
 
-![CQAPKTools](https://img.shields.io/badge/CQAPKTools-v3.2.0-blue)
-![Python](https://img.shields.io/badge/Python-3.x-green)
-![Platform](https://img.shields.io/badge/Platform-Windows-orange)
-![Author](https://img.shields.io/badge/Author-御坂初琴-purple)
+## 目录结构
 
-**一个功能强大的MIUI设备管理工具，支持APK批量重命名、应用冻结/解冻、系统优化等功能**
-
-</div>
+```
+Project/
+├── app.py                 # Flask 入口（双模式启动，v5.0）
+├── models/                # 业务逻辑（ADB、重命名、系统应用）
+├── templates/
+│   └── index.html        # 单页 Web 界面
+├── static/
+│   ├── js/app.js         # 前端交互
+│   ├── css/style.css     # 主题样式
+│   └── vendor/           # 本地静态资源（离线使用）
+│       ├── bootstrap/    # Bootstrap 5.3 CSS/JS
+│       └── bootstrap-icons/ # Bootstrap Icons 字体
+├── Tools/                # 外部工具（adb 三件套、aapt、ApkInstaller）+ 捆绑 JRE（bin/+lib/ 平级配套）
+├── Setup.ini             # 配置（aapt/keytool 路径、命名规则）
+├── CQAPKTools.spec       # PyInstaller 打包配置
+├── Py2EXE.bat            # 一键打包脚本
+├── AGENTS.md             # 开发指引
+└── ...
+```
 
 ## 📋 目录
 
-- [功能特性](#功能特性)
-- [安装说明](#安装说明)
-- [使用方法](#使用方法)
-- [功能详解](#功能详解)
-  - [通用优化](#通用优化)
-  - [澎湃冻结](#澎湃冻结)
-  - [华为引擎](#华为引擎)
-  - [批量命名](#批量命名)
-- [配置说明](#配置说明)
-- [注意事项](#注意事项)
-- [作者信息](#作者信息)
-- [许可证](#许可证)
+- [✨ 功能特性](#-功能特性)
+- [📦 安装说明](#-安装说明)
+- [🚀 使用方法](#-使用方法)
+- [📖 功能详解](#-功能详解)
+- [⚙️ 配置说明](#-配置说明)
+- [💻 技术栈](#-技术栈)
+- [📝 更新日志](#-更新日志)
+- [⚠️ 注意事项](#-注意事项)
+- [👨‍💻 作者信息](#-作者信息)
+- [📄 许可证](#-许可证)
 
 ## ✨ 功能特性
 
 ### 🔧 通用优化
+
 - **后台策略管理** - 调整应用后台运行策略
 - **一键降级** - 批量替换应用为定制版本
 - **应用激活** - 支持女娲石、小黑屋、Shizuku、Scene等工具
 - **动画设置** - 自定义系统动画速度
 
 ### 🧊 澎湃冻结
+
 - **系统服务冻结** - 冻结Analytics、Adsolution、Joyose等系统服务
 - **一键操作** - 支持冻结、解冻、卸载、重装等批量操作
 - **列表管理** - 支持CSV格式的应用列表批量处理
 - **前台应用获取** - 自动获取当前前台应用包名
 
 ### 📱 华为引擎
+
 - **共享目录映射** - 将华为移动应用引擎共享目录映射为盘符
 - **引擎管理** - 安装、关闭华为移动应用引擎
 - **软件安装** - 为华为引擎安装应用
 
 ### 🏷️ 批量命名
+
 - **APK重命名** - 根据包名、应用名等信息重命名APK文件
 - **批量处理** - 支持文件夹内所有APK文件的批量重命名
 - **自定义格式** - 支持自定义文件名格式
-- **右键菜单** - 可集成到APK文件的右键菜单
 
 ## 📦 安装说明
 
 ### 系统要求
+
 - Windows 10/11
-- Python 3.x
-- ADB工具（Android Debug Bridge）
-- aapt工具（Android Asset Packaging Tool）
+- Python 3.12+（打包为 exe 后无需 Python）
+- ADB、aapt 等外部工具**已内置**（`Project/Tools/`），无需单独安装
 
 ### 安装步骤
 
 1. **下载项目文件**
+
    ```bash
    # 将项目文件解压到指定目录
    # 例如：E:\Projects\CQApkTools
    ```
+2. **安装 Python 依赖**
 
-2. **安装Python依赖**
    ```bash
-   pip install -r Project/requirements.txt
+   # 项目根目录的 requirements.txt（flask + easygui）
+   pip install -r requirements.txt
    ```
+3. **配置文件**
 
-3. **准备依赖工具**
-   - 确保ADB工具在系统PATH中
-   - 将aapt.exe放置在Project目录下
-   - 将keytool.exe放置在Project/bin目录下
-
-4. **配置文件**
    - 编辑 `Project/Setup.ini` 文件
-   - 确保路径配置正确
+   - 确保路径配置正确（默认值开箱即用）
 
 ## 🚀 使用方法
 
-### 启动程序
-```bash
-# 进入Project目录
-cd E:\Projects\CQApkTools\Project
+### 方式一：源码运行
 
-# 运行主程序
-python main.py
+```bash
+cd Project
+pip install -r ../requirements.txt
+python app.py
 ```
 
+`app.py` 双模式启动：若 55500 端口已有服务在跑，则打开浏览器后进程直接退出；否则启动服务、3 秒后自动打开浏览器，进程常驻后台。浏览器访问 `http://127.0.0.1:55500`。
+
 ### 连接设备
+
 1. 确保已开启设备的USB调试模式
 2. 点击"连接设备"按钮
 3. 等待设备连接成功
+
+### 方式二：打包为 exe（推荐分发）
+
+```bash
+# 运行一键打包脚本（内部调用 pyinstaller --noconfirm CQAPKTools.spec）
+Project\Py2EXE.bat
+```
+
+产物为 `Project/dist/CQAPKTools/CQAPKTools.exe`，双击即可使用（同样为双模式启动，无 Python 环境的机器也能运行）。
 
 ## 📖 功能详解
 
 ### 通用优化
 
 #### 后台策略管理
+
 - **无后台**: 限制所有应用后台运行
 - **激进**: 只允许1个应用后台运行
 - **轻快**: 允许4个应用后台运行
@@ -109,17 +137,20 @@ python main.py
 - **自定义**: 可自定义后台进程数量
 
 #### 一键降级
+
 - **卸载并安装**: 先卸载再安装应用
 - **仅安装**: 直接安装应用
 - **仅替换**: 仅替换已安装的应用
 
 #### 应用激活
+
 - **女娲石**: 激活NotificationService调试模式
 - **小黑屋**: 激活IceBox应用冻结工具
 - **Shizuku**: 激活Shizuku权限管理工具
 - **Scene**: 激活Scene系统管理工具
 
 #### 动画设置
+
 - **无动画**: 关闭所有系统动画
 - **快速**: 0.5倍速动画
 - **默认设置**: 1倍速动画
@@ -129,6 +160,7 @@ python main.py
 ### 澎湃冻结
 
 #### 系统服务冻结
+
 - **Analytics**: 分析服务，通常无用
 - **Adsolution**: 广告服务，冻结可减少广告
 - **Joyose**: 温控服务，冻结可能影响计步
@@ -139,12 +171,14 @@ python main.py
 - **系统更新**: 解锁ID机专用
 
 #### 一键操作
+
 - **一键冻结**: 冻结除电量与性能外的所有系统服务
 - **一键解冻**: 解冻所有系统服务
 - **一键卸载**: 卸载所有系统服务
 - **一键重装**: 重装所有系统服务
 
 #### 列表管理
+
 - 支持CSV格式的应用列表
 - 每行一个包名
 - 支持批量冻结、解冻、卸载、重装操作
@@ -152,12 +186,14 @@ python main.py
 ### 华为引擎
 
 #### 共享目录映射
+
 - **映射共享目录为W盘**: 将华为移动应用引擎共享目录映射为W盘
 - **取消映射共享磁盘**: 取消华为移动应用引擎的盘符映射
 - **设置开机自动映射**: 设置开机自动映射共享目录
 - **网络路径方式**: 使用网络路径方式创建共享目录图标
 
 #### 引擎管理
+
 - **安装华为移动引擎**: 跳转到华为移动引擎安装页面
 - **杀死华为移动引擎**: 关闭华为应用引擎进程
 - **为华为移动引擎安装软件**: 打开汉化版的ApkInstaller
@@ -165,54 +201,96 @@ python main.py
 ### 批量命名
 
 #### 重命名操作
+
 - **单文件重命名**: 选择单个APK文件进行重命名
 - **文件夹批量重命名**: 选择文件夹，批量重命名所有APK文件
 
 #### 重命名设置
+
 - **表达式格式**: `{应用包名} {应用名字} {版本名字} {APP证书用户} {APP证书序列号}`
 - **默认格式**: `{应用包名}`
 - **自定义格式**: 可自定义文件名格式
 
 #### 右键菜单
-- **关联到右键菜单**: 将重命名功能添加到APK文件的右键菜单
-- **删除右键菜单**: 移除APK文件的右键菜单关联
+
+> 注意：V5.0 迁移遗留，前端入口保留但后端 action 尚未实现，当前不可用。
 
 ## ⚙️ 配置说明
 
 ### 配置文件位置
+
 ```
 Project/Setup.ini
 ```
 
 ### 配置项说明
-```ini
-[Config]
-aaptPath = aapt.exe
-keytoolPath = bin\keytool.exe
-newFileNamePattern = {应用包名}
-```
 
-### 配置项说明
-- **aaptPath**: aapt工具的路径
-- **keytoolPath**: keytool工具的路径
+- **aaptPath**: aapt 工具路径（相对程序目录，默认 `Tools\aapt.exe`）
+- **keytoolPath**: keytool 工具路径（相对程序目录，默认 `Tools\bin\keytool.exe`）
 - **newFileNamePattern**: APK文件重命名格式
+
+## 💻 技术栈
+
+- **后端**：Python 3.12 + Flask 2.1.3
+- **前端**：Bootstrap 5.3 + 原生 JavaScript
+- **依赖**：`flask`、`easygui`
+- **离线支持**：所有前端资源（Bootstrap、图标）均已本地化（`static/vendor/`），无需网络即可使用
+
+## 📝 更新日志
+
+### V5.0.0
+
+- 全面重构为 Flask Web 应用，浏览器访问本地服务
+- 左侧标签栏 + 右侧内容页布局
+- 右侧实时日志流（SSE）
+- 全功能迁移：通用优化、澎湃冻结、华为引擎、批量命名、批量提取安装
+- 使用 easygui 进行文件/文件夹选择，返回真实路径
+
+### V4.0.0
+
+- 重构为 PySimpleGUI 多标签页界面
+- 标签页：澎湃冻结、通用优化、华为引擎、批量命名、批量提取安装
+- 支持右键菜单批量重命名 CLI 模式
+- 模块化 models/ 与 tabs/ 分离
+
+### V3.2.0.2025
+
+- 新增设备连接状态显示
+- 支持获取前台应用包名
+- 支持应用冻结/解冻/卸载/重装（保留数据）
+- 新增动画速度三档独立调节
+- 优化日志输出
+
+### V1.0-V1.1
+
+- 首批 PySimpleGUI 图形界面
+- 基础 MIUI 优化（冻结 Analytics/Adsolution/Joyose 等）
+- 华为引擎共享目录映射
+- APK 拖拽安装与重命名
+
+### V0.9
+
+- 初始版本，以批处理脚本为主
+- 集成 IceBox/黑域等工具
+- 基础 APK 安装与重命名
 
 ## ⚠️ 注意事项
 
 1. **权限要求**
+
    - 部分功能需要管理员权限
    - 确保ADB调试已正确开启
-
 2. **数据安全**
+
    - 卸载应用会删除应用数据
    - 重装应用会保留应用数据
    - 建议在备用机上测试
-
 3. **系统兼容性**
+
    - 主要针对MIUI系统优化
    - 部分功能可能不适用于其他Android系统
-
 4. **使用建议**
+
    - 建议先在测试设备上验证功能
    - 定期备份重要数据
    - 谨慎使用系统级修改功能
@@ -224,7 +302,8 @@ newFileNamePattern = {应用包名}
 - **个人网站**: [御坂初琴软件屋](https://ybcq.github.io/)
 - **联系方式**: 通过个人网站联系
 
-### 致谢
+## 🙏 致谢
+
 - **ApkRenamer**: 作者 AsionTang
 - **ApkInstaller**: 汉化者 御坂初琴
 
@@ -239,7 +318,3 @@ Copyright By Misaka HatSune 2020-2025
 ---
 
 <div align="center">
-
-**如果这个项目对你有帮助，请给个 ⭐ Star 支持一下！**
-
-</div>
